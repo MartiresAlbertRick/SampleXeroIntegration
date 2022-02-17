@@ -1,0 +1,240 @@
+<h6>Xero Information</h6>
+<div class="container-fluid">
+  <div class="row form-group">
+    <div class="col-md-2">
+      <label>
+        API
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.xeroBillsApiUri" class="form-control form-control-sm input-sm" readonly />
+    </div>
+    <div class="col-md-2">
+      <label>
+        API Search Parameters
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.xeroBillsUriQueryParameters" class="form-control form-control-sm input-sm" readonly />
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-2">
+      <label>
+        Xero Tenant Id
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.xeroTenantId" class="form-control form-control-sm input-sm" readonly />
+    </div>
+    <div class="col-md-2">
+      <label>
+        Xero Tenant Name
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.xeroTenantName" class="form-control form-control-sm input-sm" readonly />
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-2">
+      <label>
+        Access Token
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.accessToken" class="form-control form-control-sm input-sm" readonly />
+    </div>
+    <div class="col-md-2">
+      <label>
+        Token Expiration Date/Time
+      </label>
+    </div>
+    <div class="col-md-4">
+      <input [(ngModel)]="xeroAuthorization.expiresDateTime" class="form-control form-control-sm input-sm" readonly />
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-md-9">
+      <div class="btn-group">
+        <button class="btn btn-primary btn-sm" (click)="openSpinner(spinner); requestDataFromXero()">Request Data from Xero</button>
+        <button class="btn btn-primary btn-sm" *ngIf="billsLoaded" [disabled]="disableImportButton" (click)="importMultipleRecords()">Import Selected Data to Check Voucher</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <input [(ngModel)]="searchKeyword" (keyup)="search()" type="text" *ngIf="billsLoaded" class="form-control form-control-sm input-sm" placeholder="Search keyword..." />
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <table class="table table-striped table-hover" *ngIf="xeroBills">
+      <thead>
+        <tr>
+          <th>
+            <input (change)="checkUncheckAll()" [(ngModel)]="mainCheckBox" type="checkbox" />
+          </th>
+          <th>
+            Xero ID
+          </th>
+          <th>
+            Date
+          </th>
+          <th>
+            From
+          </th>
+          <th>
+            Total
+          </th>
+          <th>
+            Import Status
+          </th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let xeroBill of xeroBills">
+          <ng-container *ngIf="xeroBill.searchMatched">
+            <td>
+              <input [(ngModel)]="xeroBill.includeInImport" type="checkbox" (change)="singleRecordCheckUncheck()" [disabled]="xeroBill.importStatus=='IMPORTED'" />
+            </td>
+            <td>
+              {{xeroBill.invoiceNumber}}
+            </td>
+            <td>
+              {{xeroBill.date}}
+            </td>
+            <td>
+              {{xeroBill.contact.name}}
+            </td>
+            <td>
+              {{xeroBill.total}}
+            </td>
+            <td>
+              {{xeroBill.importStatus}}
+            </td>
+            <td>
+              <button type="button" class="btn btn-outline-success btn-sm" (click)="selectBill(xeroBill); openModal(billInfo)">
+                View Information
+              </button>
+            </td>
+          </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #billInfo>
+  <div class="modal-header">
+    <h4 class="modal-title">Information</h4>
+    <a class="close" role="button" style="cursor:pointer" aria-label="Close" (click)="modalRef.hide()">&times;</a>
+  </div>
+  <div class="modal-body">
+    <div class="row form-group">
+      <div class="col-md-2">
+        <label>
+          Xero ID
+        </label>
+      </div>
+      <div class="col-md-4">
+        <input [(ngModel)]="selectedXeroBill.invoiceNumber" class="form-control form-control-sm input-sm" readonly />
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2">
+        <label>
+          From
+        </label>
+      </div>
+      <div class="col-md-4">
+        <input [(ngModel)]="selectedXeroBill.contact.name" class="form-control form-control-sm input-sm" readonly />
+      </div>
+      <div class="col-md-2">
+        <label>
+          Date
+        </label>
+      </div>
+      <div class="col-md-4">
+        <input [(ngModel)]="selectedXeroBill.date" class="form-control form-control-sm input-sm" readonly />
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2">
+        <label>
+          Total Amount
+        </label>
+      </div>
+      <div class="col-md-2">
+        <input [(ngModel)]="selectedXeroBill.total" class="form-control form-control-sm input-sm" readonly />
+      </div>
+      <div class="col-md-2">
+        <label>
+          Amount in Words
+        </label>
+      </div>
+      <div class="col-md-6">
+        <input [(ngModel)]="selectedXeroBill.totalInWords" class="form-control form-control-sm input-sm" readonly />
+      </div>
+    </div>
+    <div class="row form-group">
+      <div class="col-md-2">
+        <label>
+          Particulars
+        </label>
+      </div>
+      <div class="col-md-10">
+        <textarea [(ngModel)]="selectedXeroBill.particulars" class="form-control form-control-sm input-sm"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-striped table-hover font-sm" *ngIf="selectedXeroBill.lineItems">
+          <thead>
+            <tr>
+              <th>
+                Line Description
+              </th>
+              <th>
+                Line Amount
+              </th>
+              <th>
+                Account Code
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lineItem of selectedXeroBill.lineItems">
+              <td (click)="assignParticulars(lineItem)">
+                {{lineItem.description}}
+              </td>
+              <td>
+                {{lineItem.lineAmount}}
+              </td>
+              <td>
+                {{lineItem.accountCode}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success btn-sm" (click)="importSingleRecord(selectedXeroBill)" [disabled]="selectedXeroBill.importStatus=='IMPORTED'">
+      <span *ngIf="selectedXeroBill.importStatus == 'IMPORTED'">Imported</span>
+      <span *ngIf="selectedXeroBill.importStatus == 'NOT IMPORTED'">Import this record</span>
+    </button>
+  </div>
+</ng-template>
+<ng-template #spinner>
+  <div class="modal-body">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-2">
+          <i class="fa fa-circle-o-notch fa-spin fa-lg fa-fw"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

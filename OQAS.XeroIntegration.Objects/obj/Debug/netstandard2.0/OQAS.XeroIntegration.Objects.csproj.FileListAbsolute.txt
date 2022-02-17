@@ -1,0 +1,9 @@
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\bin\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.deps.json
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\bin\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.dll
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\bin\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.pdb
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.csprojAssemblyReference.cache
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.AssemblyInfoInputs.cache
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.AssemblyInfo.cs
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.csproj.CoreCompileInputs.cache
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.dll
+C:\Users\ITSD\Downloads\OQAS\OQAS_XeroIntegration\OQAS.XeroIntegration\OQAS.XeroIntegration.Objects\obj\Debug\netstandard2.0\OQAS.XeroIntegration.Objects.pdb
